@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.jobsapp.data.models.Job
+import com.example.jobsapp.data.models.jobdetail.JobDetail
 import com.example.jobsapp.remote.JobsApi
+import retrofit2.HttpException
 
 class AppRepository(private val api: JobsApi) {
 
@@ -16,10 +18,24 @@ class AppRepository(private val api: JobsApi) {
     suspend fun getJobs() {
         try {
             val jobList = api.retrofitService.getJobs()
-            Log.d("API Response", jobList.toString())
+            Log.d("AppRepository", jobList.toString())
             _jobs.value = jobList.stellenangebote!!
         } catch (e: Exception) {
             Log.e("AppRepository", "Error loading data from API: $e")
+        }
+    }
+
+    suspend fun getJobDetails(encodedHashID: String): JobDetail {
+        try {
+            val jobDetail = api.retrofitService.getJobDetails(encodedHashID)
+            Log.d("AppRepository", jobDetail.toString())
+            return jobDetail
+        } catch (e: HttpException) {
+            Log.e("AppRepository", "HTTP error loading job details: ${e.code()} ${e.message()}")
+            throw e
+        } catch (e: Exception) {
+            Log.e("AppRepository", "Error loading job details from API: $e")
+            throw e
         }
     }
 }

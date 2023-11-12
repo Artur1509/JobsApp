@@ -1,6 +1,7 @@
 package com.example.jobsapp.remote
 
 import com.example.jobsapp.data.models.JobList
+import com.example.jobsapp.data.models.jobdetail.JobDetail
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -8,6 +9,7 @@ import okhttp3.Request
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 const val BASE_URL = "https://rest.arbeitsagentur.de/"
 
@@ -34,6 +36,9 @@ private val retrofit = Retrofit.Builder()
 interface JobsucheApiService {
     @GET("jobboerse/jobsuche-service/pc/v4/app/jobs")
     suspend fun getJobs(): JobList
+
+    @GET("jobboerse/jobsuche-service/pc/v2/jobdetails/{encodedHashID}")
+    suspend fun getJobDetails(@Path("encodedHashID") encodedHashID: String): JobDetail
 }
 
 object JobsApi {

@@ -3,11 +3,13 @@ package com.example.jobsapp.util
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.jobsapp.JobsViewModel
 import com.example.jobsapp.data.models.Job
 import com.example.jobsapp.databinding.JobListItemBinding
 
 class JobsAdapter(
     var dataset: List<Job>,
+    var viewModel: JobsViewModel
 
 
 ) : RecyclerView.Adapter<JobsAdapter.ItemViewHolder>() {
@@ -28,6 +30,17 @@ class JobsAdapter(
         holder.binding.berufTV.text = item.beruf
         holder.binding.arbeitgeberTV.text = item.arbeitgeber
         holder.binding.veroeffentlichungsDatumTV.text = item.aktuelleVeroeffentlichungsdatum
+        holder.binding.strasseTV.text = item.arbeitsort.strasse
+        holder.binding.plzTV.text = item.arbeitsort.plz.toString()
+        holder.binding.ortTV.text = item.arbeitsort.ort
+        holder.binding.regionTV.text = item.arbeitsort.region
+        holder.binding.landTV.text = item.arbeitsort.land
+
+        holder.itemView.setOnClickListener {
+
+            viewModel.loadJobDetails(item.hashId)
+
+        }
 
 
     }

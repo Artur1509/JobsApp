@@ -33,7 +33,7 @@ class JobsFragment : Fragment() {
         binding.jobsErgebnisseRV.setHasFixedSize(true)
 
         viewModel.jobs.observe(viewLifecycleOwner) {
-            binding.jobsErgebnisseRV.adapter = JobsAdapter(it)
+            binding.jobsErgebnisseRV.adapter = JobsAdapter(it, viewModel)
         }
 
     }

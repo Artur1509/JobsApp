@@ -1,5 +1,6 @@
 package com.example.jobsapp
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jobsapp.remote.AppRepository
@@ -15,6 +16,17 @@ class JobsViewModel : ViewModel() {
     fun loadData() {
         viewModelScope.launch {
             repository.getJobs()
+        }
+    }
+
+    fun loadJobDetails(encodedHashID: String) {
+        viewModelScope.launch {
+            try {
+                val jobDetail = repository.getJobDetails(encodedHashID)
+
+            } catch (e: Exception) {
+                Log.e("JobsViewModel", "Error loading job details: $e")
+            }
         }
     }
 }
