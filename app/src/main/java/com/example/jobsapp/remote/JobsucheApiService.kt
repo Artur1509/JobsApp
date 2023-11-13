@@ -10,6 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 const val BASE_URL = "https://rest.arbeitsagentur.de/"
 
@@ -39,6 +40,13 @@ interface JobsucheApiService {
 
     @GET("jobboerse/jobsuche-service/pc/v2/jobdetails/{encodedHashID}")
     suspend fun getJobDetails(@Path("encodedHashID") encodedHashID: String): JobDetail
+
+    @GET("jobboerse/jobsuche-service/pc/v4/app/jobs")
+    suspend fun getJobsBy(
+
+        @Query("berufsfeld") berufsfeld: String? = null // Hinzugefügter Parameter für das Berufsfeld
+
+        ): JobList
 }
 
 object JobsApi {

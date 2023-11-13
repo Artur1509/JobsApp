@@ -17,18 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Jobs"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
-        app:layout_constraintEnd_toEndOf="@+id/materialToolbar"
-        app:layout_constraintStart_toStartOf="@+id/materialToolbar"
-        app:layout_constraintTop_toTopOf="@+id/materialToolbar" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/jobsErgebnisseRV"
         android:layout_width="match_parent"
@@ -39,5 +27,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
         tools:listitem="@layout/job_list_item"/>
+
+    <SearchView
+        android:id="@+id/searchSV"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
+        app:layout_constraintEnd_toEndOf="@+id/materialToolbar"
+        app:layout_constraintStart_toStartOf="@+id/materialToolbar"
+        app:layout_constraintTop_toTopOf="@+id/materialToolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

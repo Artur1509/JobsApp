@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import com.example.jobsapp.JobsViewModel
 import com.example.jobsapp.R
@@ -14,6 +15,7 @@ import com.example.jobsapp.util.JobsAdapter
 class JobsFragment : Fragment() {
 
     private lateinit var binding: FragmentJobsBinding
+    private lateinit var jobSearch: SearchView
     private val viewModel: JobsViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -30,11 +32,34 @@ class JobsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        jobSearch = binding.searchSV
+
         binding.jobsErgebnisseRV.setHasFixedSize(true)
 
+        // Adapter wird erstellt und initialisiert
         viewModel.jobs.observe(viewLifecycleOwner) {
             binding.jobsErgebnisseRV.adapter = JobsAdapter(it, viewModel)
         }
 
+        // Suchfunktion nach Berufsfeld
+        jobSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+                if (!query.isNullOrBlank()) {
+                    viewModel.loadJobsByJobField(query)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                if (!newText.isNullOrBlank()) {
+                    viewModel.loadJobsByJobField(newText)
+                }
+
+                return true
+            }
+        })
     }
+
 }

@@ -13,12 +13,14 @@ class JobsViewModel : ViewModel() {
 
     val jobs = repository.jobs
 
+    // lade jobs
     fun loadData() {
         viewModelScope.launch {
             repository.getJobs()
         }
     }
 
+    // lade jobdetail --- 404 Error, findet keine Daten mit der hashId???
     fun loadJobDetails(encodedHashID: String) {
         viewModelScope.launch {
             try {
@@ -27,6 +29,13 @@ class JobsViewModel : ViewModel() {
             } catch (e: Exception) {
                 Log.e("JobsViewModel", "Error loading job details: $e")
             }
+        }
+    }
+
+    // Lade jobs gefiltert nach Berufsfeld.
+    fun loadJobsByJobField(berufsfeld: String) {
+        viewModelScope.launch {
+            repository.getJobsByJobField(berufsfeld)
         }
     }
 }
