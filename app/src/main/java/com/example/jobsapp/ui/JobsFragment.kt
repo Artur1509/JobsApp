@@ -32,6 +32,9 @@ class JobsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val navBar = requireActivity().findViewById<View>(R.id.bottomNavigation)
+        navBar.visibility = View.VISIBLE
+
         jobSearch = binding.searchSV
 
         binding.jobsErgebnisseRV.setHasFixedSize(true)

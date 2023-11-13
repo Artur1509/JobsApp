@@ -4,10 +4,12 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobsapp.JobsViewModel
 import com.example.jobsapp.data.models.Job
 import com.example.jobsapp.databinding.JobListItemBinding
+import com.example.jobsapp.ui.JobsFragmentDirections
 import java.nio.charset.StandardCharsets
 import java.util.Base64
 
@@ -42,20 +44,21 @@ class JobsAdapter(
         holder.binding.landTV.text = item.arbeitsort.land
 
         holder.itemView.setOnClickListener {
+            val navController = holder.itemView.findNavController()
 
             // Refnr muss erst in Base64 encoded werden, damit der apicall funktioniert um das Jobdetail zu sehen !
             val originalString = item.refnr
-            val encodedBytes = Base64.getEncoder().encode(originalString.toByteArray(
-                StandardCharsets.UTF_8))
+            val encodedBytes = Base64.getEncoder().encode(originalString.toByteArray(StandardCharsets.UTF_8))
             val encodedString = String(encodedBytes)
 
             viewModel.loadJobDetails(encodedString)
+            navController.navigate(JobsFragmentDirections.actionJobsFragmentToJobDetailFragment())
+
 
         }
 
 
     }
-
     override fun getItemCount(): Int {
         return dataset.size
     }
