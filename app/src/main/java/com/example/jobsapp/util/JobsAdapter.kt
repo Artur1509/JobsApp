@@ -54,9 +54,7 @@ class JobsAdapter(
             viewModel.loadJobDetails(encodedString)
             navController.navigate(JobsFragmentDirections.actionJobsFragmentToJobDetailFragment())
 
-
         }
-
 
     }
     override fun getItemCount(): Int {
